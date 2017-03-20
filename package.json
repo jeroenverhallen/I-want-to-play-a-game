@@ -1,0 +1,19 @@
+{
+  "name": "gamelocator",
+  "version": "1.0.0",
+  "description": "this app can help you find people for your game or a game to join",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.1",
+    "pg": "^6.1.4",
+    "pugdemo": "file:pug",
+    "sequelize": "^3.30.2"
+  }
+}
