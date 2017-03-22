@@ -1,0 +1,21 @@
+doctype html
+html
+    head(lang='en-US')
+body
+    h1 I want to play a game
+    div
+        a(href='/newuser') register
+    if user
+        div
+            a(href='/logout') logout
+        div
+            a(href='/newgame') start a new game
+        div
+            a(href='/joingame') join a game
+    else
+        div
+            a(href='/login') login
+
+    block content
+    
+    

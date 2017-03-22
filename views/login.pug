@@ -1,0 +1,9 @@
+extends ./index
+block content
+    h1 Login
+    form( action='login' method='post' )
+        div
+            input( type='text', name='username', placeholder='username' )
+        div
+            input( type='password', name='password', placeholder='password')
+        input( type='submit' )
