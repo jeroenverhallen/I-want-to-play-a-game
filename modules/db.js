@@ -15,17 +15,19 @@ user = db.conn.define( 'user', {
     age: sequelize.INTEGER,
     hostrating: sequelize.FLOAT,
     guestrating: sequelize.FLOAT,
-    location: sequelize.STRING
+    lattitude: sequelize.FLOAT,
+    longitude: sequelize.FLOAT
 } )
 
 game = db.conn.define( 'game', {
     name: sequelize.STRING,
     info: sequelize.STRING,
     status: sequelize.STRING,
-    requiredplayers: sequelize.STRING,
-    players: sequelize.INTEGER,
+    players: sequelize.STRING,
+    joining: sequelize.INTEGER,
     date: sequelize.STRING,
-    location: sequelize.STRING,
+    lattitude: sequelize.FLOAT,
+    longitude: sequelize.FLOAT,
     alcohol: sequelize.STRING
 } )
 
@@ -46,6 +48,8 @@ db.conn.sync( { force: true } )
             username: 'Jeroen',
             password: 'poes',
             age: 27,
+            lattitude: 52.341,
+            longitude: 4.824,
             hostrating: 3.5,
             guestrating: 4.1     
         } ),
@@ -53,6 +57,8 @@ db.conn.sync( { force: true } )
             username: 'Catan',
             password: 'Catan',
             age: 33,
+            lattitude: 52.349,
+            longitude: 4.884,
             hostrating: 4.2,
             guestrating: 3.1
         } ),
@@ -60,6 +66,8 @@ db.conn.sync( { force: true } )
             username: 'Risk',
             password: 'Risk',
             age: 21,
+            lattitude: 52.243,
+            longitude: 4.921,
             hostrating: 2.9,
             guestrating: 2.7,  
         } ) 

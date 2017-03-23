@@ -1,0 +1,17 @@
+extends ./index
+block content
+    h1 Welcome to the wonderfull world of playing games with people you might not have known before
+    div
+        p click the locate button to get your coordinates and then fill them in in the form please
+        button(type="button" onclick='geoFindMe()') locate
+    div(id="out")
+    form( action='newuser' method='post' )
+        div
+            input( type='text', name='name', placeholder='game name')
+        div
+            input( type='integer', name='players', placeholder='how many players are needed?' )
+        div
+            input( type='text', name='date', placeholer= )
+        div
+            input( type='text', name='info', placeholder='anything you want to add?')
+        input( type="submit" )

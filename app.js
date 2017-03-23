@@ -2,6 +2,7 @@ const express = require('express'),
     bodyparser = require('body-parser'),
     session = require('express-session'),
     sequelize = require('sequelize')
+ //   GoogleMapsLoader = require('google-maps')
 
 const app = express()
 const db = require(__dirname + '/modules/db')
@@ -21,16 +22,27 @@ app.use( session( {
     }
 } ) )
 
+// GoogleMapsLoader.load(function(google) {
+//     new google.maps.Map(el, options)
+// } )
 
 // landing page
 app.get( '/', (req, res) => {
     res.render( 'index', { user: req.session.user } )
 } )
 
+app.get( '/index', (req, res) => {
+    res.render( 'index', { user: req.session.user } )
+ } )
+
 // login
 app.get( '/login', (req, res) => {
     res.render( 'login', { user: req.session.user
     } )
+} )
+
+app.get( '/newuser', (req, res) => {
+    res.render( 'newuser', { user: req.session.user } )
 } )
 
 app.post( '/login', ( req, res) => {
@@ -52,18 +64,17 @@ app.post( '/login', ( req, res) => {
 
 // logout
 app.get( '/logout', (req, res) => {
+    console.log('log out', req.session.user.username)
     req.session.destroy( )
     res.render( 'index' )
 } )
 
 // register a new user
-app.get( '/newuser', (req, res) => {
-    res.render( 'newuser', { user: req.session.user } )
-} )
-
 app.post( '/newuser', (req, res) => {
     let newUser = {
         username: req.body.username,
+        latitude: req.boy.latitude,
+        longitude: req.body.longitude,
         password: req.body.password,
         email: req.body.email,
         age: req.body.age
