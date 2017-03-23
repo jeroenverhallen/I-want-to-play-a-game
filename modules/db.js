@@ -15,7 +15,7 @@ user = db.conn.define( 'user', {
     age: sequelize.INTEGER,
     hostrating: sequelize.FLOAT,
     guestrating: sequelize.FLOAT,
-    lattitude: sequelize.FLOAT,
+    latitude: sequelize.FLOAT,
     longitude: sequelize.FLOAT
 } )
 
@@ -26,7 +26,7 @@ game = db.conn.define( 'game', {
     players: sequelize.STRING,
     joining: sequelize.INTEGER,
     date: sequelize.STRING,
-    lattitude: sequelize.FLOAT,
+    latitude: sequelize.FLOAT,
     longitude: sequelize.FLOAT,
     alcohol: sequelize.STRING
 } )
@@ -48,7 +48,7 @@ db.conn.sync( { force: true } )
             username: 'Jeroen',
             password: 'poes',
             age: 27,
-            lattitude: 52.341,
+            latitude: 52.341,
             longitude: 4.824,
             hostrating: 3.5,
             guestrating: 4.1     
@@ -57,7 +57,7 @@ db.conn.sync( { force: true } )
             username: 'Catan',
             password: 'Catan',
             age: 33,
-            lattitude: 52.349,
+            latitude: 52.349,
             longitude: 4.884,
             hostrating: 4.2,
             guestrating: 3.1
@@ -66,12 +66,56 @@ db.conn.sync( { force: true } )
             username: 'Risk',
             password: 'Risk',
             age: 21,
-            lattitude: 52.243,
+            latitude: 52.243,
             longitude: 4.921,
             hostrating: 2.9,
             guestrating: 2.7,  
         } ) 
     ] )
+} ).then( f => {
+    game.create( {
+        name: 'schaken',
+        userId: 1,
+        info: 'gewoon een potje schaken',
+        players: 2,
+        date: '25-12-2017 20:00',
+        latitude: 52.341,
+        longitude: 4.824,
+        alcohol: 'Ik zat zelf te denken aan een goed glas whisky erbij'
+    } )
+} ).then( f => {
+    game.create( {
+        name: 'dammen',
+        userId: 1,
+        info: 'gewoon een potje dammen',
+        players: 2,
+        date: '25-12-2017 22:00',
+        latitude: 52.341,
+        longitude: 4.824,
+        alcohol: 'Ik zat zelf te denken aan een goed glas whisky erbij'
+    } )
+} ).then( f => {
+    game.create( {
+        name: 'Kolonisten van Catan',
+        userId: 2,
+        info: 'met zeevaarders uitbreiding',
+        players: 4,
+        date: '27-12-2017 20:00',
+        latitude: 52.349,
+        longitude: 4.884,
+        alcohol: 'Het gaat om het spel maar neem gerust iets voor jezelf mee'
+    } )
+} ).then( f => {
+    game.create( {
+        name: 'Risk',
+        userId: 3,
+        info: 'De originele versie natuurlijk',
+        players: 3,
+        date: '23-12-2017 18:00',
+        latitude: 52.243,
+        longitude: 4.921,
+        alcohol: 'BIERRRR!'
+    } )
 } )
 .catch( err => {
   console.log('An error occured: ' + err)

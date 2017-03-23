@@ -1,0 +1,6 @@
+#gameblock {
+	border: 1px solid darkblue;
+    padding: 6px;
+    margin: 5px;
+    display: inline-block;
+}

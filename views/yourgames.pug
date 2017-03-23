@@ -1,0 +1,8 @@
+extends ./index
+block content
+    h1 Here is a list of all your games
+    .container
+        each game in games
+            div#gameblock
+                    h4= 'game: ' + game.name
+                    p= 'players required: ' + game.players  

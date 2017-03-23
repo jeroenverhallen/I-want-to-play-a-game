@@ -1,6 +1,7 @@
 doctype html
 html
     head(lang='en-US')
+    link(rel='stylesheet', href='custom.css')
 body
     h1 I want to play a game
     div
@@ -12,6 +13,8 @@ body
             a(href='/newgame') start a new game
         div
             a(href='/joingame') join a game
+        div
+            a(href='/yourgames') See an overview of all games you started
     else
         div
             a(href='/login') login

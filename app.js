@@ -80,14 +80,37 @@ app.post( '/newuser', (req, res) => {
         age: req.body.age
     }
     user.create( newUser )
-    req.session.visited = true
-    req.session.user=newUser
-    res.render('index', { user: req.session.user })
+    res.render('login', { user: req.session.user })
 } )
 
 // start a new game
 app.get( '/newgame', (req, res) => {
     res.render( 'newgame', { user: req.session.user } )
+} )
+
+app.post( '/newgame', (req, res) => {
+    console.log('now logged in: ', req.session.user)
+    let newGame = {
+        name: req.body.name,
+        players: req.body.players,
+        date: req.body.date,
+        alcohol: req.body.alcohol,
+        info: req.body.info,
+        latitude: req.session.user.latitude,
+        longitude: req.session.user.longitude,
+        userId: req.session.user.id
+    }
+    game.create( newGame )
+    res.render( 'index', { user: req.session.user } )
+} )
+
+//to see all games you personally started
+app.get( '/yourgames', ( req, res ) => {
+    game.findAll( { 
+        where: { userId: req.session.user.id }
+    } ).then( games => {
+        res.render( 'yourgames', { games:games, user: req.session.user } )
+    } )
 } )
 
 // find a game to join
