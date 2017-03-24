@@ -1,0 +1,14 @@
+extends ./index
+block content
+    h1 Here are all games in your area
+    .container
+        each game in games
+            div#gameblock
+                    a#game( href='/' + game.name)
+                        h= game.name
+                    p= 'date: ' + game.date
+                    p= 'players required: ' + game.players
+                    p= 'current number of players: ' + game.joining
+                    p= 'alcoholpolicy: ' + game.alcohol
+                    p= 'additional info: ' + game.info
+                    p= 'approximate distance from you: ' + 110 * Math.sqrt( Math.pow( (game.latitude - user.latitude), 2) + Math.pow( (game.longitude - user.longitude), 2 ) ) + 'km'
