@@ -36,10 +36,17 @@ chat = db.conn.define( 'chat', {
     messages: sequelize.STRING
 } )
 
+usergame = db.conn.define('user-game', {
+    role: sequelize.STRING
+} )
+
 chat.belongsTo( game )
 game.hasMany( chat )
 game.belongsTo( user )
 user.hasMany( game )
+user.belongsToMany( game, { through: usergame} )
+game.belongsToMany( user, {through: usergame } )
+
 
 db.conn.sync( { force: true } )
 .then( f => {
@@ -70,6 +77,15 @@ db.conn.sync( { force: true } )
             longitude: 4.921,
             hostrating: 2.9,
             guestrating: 2.7,  
+        } ),
+        user.create( {
+            username: 'Moose',
+            password: 'eh',
+            age: 29,
+            latitude: 48.9,
+            longitude: 2.4,
+            hostrating: 2.5,
+            guestrating: 3.9     
         } ) 
     ] )
 } ).then( f => {
@@ -78,7 +94,7 @@ db.conn.sync( { force: true } )
         userId: 1,
         info: 'gewoon een potje schaken',
         players: 2,
-        date: '25-12-2017 20:00',
+        date: '25-04-2017 20:00',
         latitude: 52.341,
         longitude: 4.824,
         alcohol: 'Ik zat zelf te denken aan een goed glas whisky erbij'
@@ -89,7 +105,7 @@ db.conn.sync( { force: true } )
         userId: 1,
         info: 'gewoon een potje dammen',
         players: 2,
-        date: '25-12-2017 22:00',
+        date: '25-03-2017 22:00',
         latitude: 52.341,
         longitude: 4.824,
         alcohol: 'Ik zat zelf te denken aan een goed glas whisky erbij'
@@ -100,7 +116,7 @@ db.conn.sync( { force: true } )
         userId: 2,
         info: 'met zeevaarders uitbreiding',
         players: 4,
-        date: '27-12-2017 20:00',
+        date: '27-03-2017 20:00',
         latitude: 52.349,
         longitude: 4.884,
         alcohol: 'Het gaat om het spel maar neem gerust iets voor jezelf mee'
@@ -111,10 +127,21 @@ db.conn.sync( { force: true } )
         userId: 3,
         info: 'De originele versie natuurlijk',
         players: 3,
-        date: '23-12-2017 18:00',
+        date: '23-04-2017 18:00',
         latitude: 52.243,
         longitude: 4.921,
         alcohol: 'BIERRRR!'
+    } )
+} ).then( f => {
+    game.create( {
+        name: 'Hockey',
+        userId: 4,
+        info: 'Ice hockey eh',
+        players: 8,
+        date: '23-12-2017 18:00',
+        latitude: 48.9,
+        longitude: 2.4,
+        alcohol: 'maple syrup wodka eh'
     } )
 } )
 .catch( err => {

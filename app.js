@@ -113,6 +113,32 @@ app.get( '/yourgames', ( req, res ) => {
     } )
 } )
 
+// see all games you can join
+app.get( '/joingame', ( req, res ) => {
+    game.findAll( {    
+    } ).then( games => {
+        res.render( 'joingame', { games:games, user: req.session.user } )
+    } )
+} )
+
+// view a game to join it
+app.get( '/:name', ( req, res ) => {
+    console.log('let us see if this is even firin')
+    game.findOne( {
+        where: {
+            name: req.params.name
+        }, include: [
+            { model: user }
+        ]
+    } )
+    .then( game => {
+        res.render( 'singlegame', { 
+            game: game,
+            user: req.session.user
+        } )
+    } )
+} )
+
 // find a game to join
 app.get( '/joingame', (req, res) => {
     res.render( 'joingame', { user: req.session.user } )

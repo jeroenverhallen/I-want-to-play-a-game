@@ -1,7 +1,9 @@
 doctype html
 html
-    head(lang='en-US')
-    link(rel='stylesheet', href='custom.css')
+head(lang='en-US')
+    link(rel='stylesheet' href='custom.css')
+    link(rel='stylesheet' href='bootstrap.css')
+    link(rel='stylesheet' href='bootstrap-slider.css')
 body
     h1 I want to play a game
     div
@@ -19,7 +21,8 @@ body
         div
             a(href='/login') login
     script(src='/custom.js')
-
+    script(src='/jquery.js')
+    script(src='/bootstrap-slider.min.js')
     block content
     
     

@@ -1,3 +1,4 @@
+// googlemaps
 function geoFindMe() {
   var output = document.getElementById("out");
 

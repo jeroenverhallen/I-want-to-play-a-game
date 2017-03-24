@@ -4,5 +4,9 @@ block content
     .container
         each game in games
             div#gameblock
-                    h4= 'game: ' + game.name
-                    p= 'players required: ' + game.players  
+                    h#game= game.name
+                    p= 'date: ' + game.date
+                    p= 'players required: ' + game.players
+                    p= 'current number of players: ' + game.joining
+                    p= 'alcoholpolicy: ' + game.alcohol
+                    p= 'additional info: ' + game.info
