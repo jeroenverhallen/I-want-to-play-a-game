@@ -3,7 +3,6 @@ const express = require('express'),
     session = require('express-session'),
     sequelize = require('sequelize')
  //   GoogleMapsLoader = require('google-maps')
-
 const app = express()
 const db = require(__dirname + '/modules/db')
 
@@ -73,7 +72,7 @@ app.get( '/logout', (req, res) => {
 app.post( '/newuser', (req, res) => {
     let newUser = {
         username: req.body.username,
-        latitude: req.boy.latitude,
+        latitude: req.body.latitude,
         longitude: req.body.longitude,
         password: req.body.password,
         email: req.body.email,

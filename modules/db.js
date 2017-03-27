@@ -79,8 +79,8 @@ db.conn.sync( { force: true } )
             guestrating: 2.7,  
         } ),
         user.create( {
-            username: 'Moose',
-            password: 'eh',
+            username: 'Pierre',
+            password: 'uh',
             age: 29,
             latitude: 48.9,
             longitude: 2.4,
@@ -134,14 +134,14 @@ db.conn.sync( { force: true } )
     } )
 } ).then( f => {
     game.create( {
-        name: 'Hockey',
+        name: 'jeu de boule',
         userId: 4,
-        info: 'Ice hockey eh',
+        info: 'hon hon hon',
         players: 8,
         date: '23-12-2017 18:00',
         latitude: 48.9,
         longitude: 2.4,
-        alcohol: 'maple syrup wodka eh'
+        alcohol: 'du vin'
     } )
 } )
 .catch( err => {

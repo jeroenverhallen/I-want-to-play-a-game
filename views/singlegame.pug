@@ -8,4 +8,4 @@ block content
         p= 'current number of players: ' + game.joining                
         p= 'alcoholpolicy: ' + game.alcohol
         p= 'additional info: ' + game.info
-        p= 'approximate distance from you: ' + 110 * Math.sqrt( Math.pow( (game.latitude - user.latitude), 2) + Math.pow( (game.longitude - user.longitude), 2 ) ) + 'km'
+        p= 'approximate distance from you: ' + Math.round( 110 * Math.sqrt( Math.pow( (game.latitude - user.latitude), 2) + Math.pow( (game.longitude - user.longitude), 2 ) ) ) + 'km'

@@ -10,3 +10,6 @@
     margin: 2px;
     display: inline-block;
 }
+#ex1Slider .slider-selection {
+	background: darkred;
+}
