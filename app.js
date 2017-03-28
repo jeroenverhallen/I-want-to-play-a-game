@@ -2,6 +2,8 @@ const express = require('express'),
     bodyparser = require('body-parser'),
     session = require('express-session'),
     sequelize = require('sequelize')
+    Slider = require('bootstrap-slider')
+
  //   GoogleMapsLoader = require('google-maps')
 const app = express()
 const db = require(__dirname + '/modules/db')
@@ -21,9 +23,6 @@ app.use( session( {
     }
 } ) )
 
-// GoogleMapsLoader.load(function(google) {
-//     new google.maps.Map(el, options)
-// } )
 
 // landing page
 app.get( '/', (req, res) => {
@@ -120,15 +119,21 @@ app.get( '/joingame', ( req, res ) => {
     } )
 } )
 
+app.post( '/joingame', (req, res) => {
+    console.log(  req.body, req.body.sliderthing )
+    game.findAll( {    
+    } ).then( games => {
+        res.render( 'joingame', { games:games, user: req.session.user, sliderthing: req.body.sliderthing } )
+    } )
+} )
+
 // view a game to join it
-app.get( '/:name', ( req, res ) => {
+app.get( '/letsplay:name', ( req, res ) => {
     console.log('let us see if this is even firin')
     game.findOne( {
         where: {
             name: req.params.name
-        }, include: [
-            { model: user }
-        ]
+        }
     } )
     .then( game => {
         res.render( 'singlegame', { 
@@ -136,6 +141,18 @@ app.get( '/:name', ( req, res ) => {
             user: req.session.user
         } )
     } )
+} )
+
+app.post( '/singlegame', (req, res) => {
+    console.log( user, 'bla', req.session.user)
+    game.findOne( {
+        where: {
+            name: 'Risk'
+        }, include: [
+            {model: user}
+        ]
+    } )
+    .then(  )
 } )
 
 // find a game to join

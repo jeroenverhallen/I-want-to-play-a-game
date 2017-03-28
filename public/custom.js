@@ -1,29 +1,53 @@
 // googlemaps
+
 function geoFindMe() {
-  var output = document.getElementById("out");
+  var output = document.getElementById("out")
 
   if (!navigator.geolocation){
-    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-    return;
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>"
+    return
   }
 
   function success(position) {
-    var latitude  = position.coords.latitude;
-    var longitude = position.coords.longitude;
+    var latitude  = Math.round(100 * position.coords.latitude)/100
+    var longitude = Math.round(100 * position.coords.longitude)/100
 
-    output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+    output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>'
 
-    var img = new Image();
-    img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+    var img = new Image()
+    img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false"
 
-    output.appendChild(img);
+    output.appendChild(img)
   }
 
   function error() {
-    output.innerHTML = "Unable to retrieve your location";
+    output.innerHTML = "Unable to retrieve your location"
   }
 
-  output.innerHTML = "<p>Locating…</p>";
+  output.innerHTML = "<p>Locating…</p>"
 
-  navigator.geolocation.getCurrentPosition(success, error);
+  navigator.geolocation.getCurrentPosition(success, error)
 }
+
+// $('#ex1').slider({
+// 	formatter: function(value) {
+// 		return 'Current value: ' + value;
+// 	}
+// }).onChange( f => {
+//   console.log(value)
+// })
+
+// var slider = new Slider('#ex1', {} ) 
+
+
+//datepicker
+// $(function () {
+//   $('#datetimepicker8').datetimepicker({
+//     icons: {
+//       time: "fa fa-clock-o",
+//       date: "fa fa-calendar",
+//       up: "fa fa-arrow-up",
+//       down: "fa fa-arrow-down"
+//     }
+//   })
+// })

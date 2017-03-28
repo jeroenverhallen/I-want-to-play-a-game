@@ -31,6 +31,7 @@ game = db.conn.define( 'game', {
     alcohol: sequelize.STRING
 } )
 
+
 chat = db.conn.define( 'chat', {
     input: sequelize.STRING,
     messages: sequelize.STRING
@@ -44,7 +45,7 @@ chat.belongsTo( game )
 game.hasMany( chat )
 game.belongsTo( user )
 user.hasMany( game )
-user.belongsToMany( game, { through: usergame} )
+user.belongsToMany( game, {through: usergame} )
 game.belongsToMany( user, {through: usergame } )
 
 
