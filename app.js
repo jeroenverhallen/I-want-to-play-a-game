@@ -98,7 +98,13 @@ app.post( '/newgame', (req, res) => {
         longitude: req.session.user.longitude,
         userId: req.session.user.id
     }
-    game.create( newGame )
+    game.create( newGame ).then ( game => {
+        console.log( req.session.user.id, game.id )
+        attend.create({
+            userId: req.session.user.id,
+            gameId: game.id
+        } )
+    } )
     res.render( 'index', { user: req.session.user } )
 } )
 
