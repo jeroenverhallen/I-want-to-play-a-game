@@ -19,7 +19,7 @@ app.use( session( {
     saveUninitialized: true,
     cookie: {
         secure: false,
-        maxAge: 1000 * 60 * 60 * 24
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
 } ) )
 
@@ -52,19 +52,19 @@ app.post( '/login', ( req, res) => {
         if( theuser.password == req.body.password ) {
             req.session.user = theuser
             res.render( 'index', {
-                user:theuser
+                user: theuser
             } )
         } else {
-            res.render( 'login' )
+            res.render( 'login', { user: req.session.user } )
         }
     } ).catch(console.log.bind(console))
 } )
 
 // logout
 app.get( '/logout', (req, res) => {
-    console.log('log out', req.session.user.username)
     req.session.destroy( )
-    res.render( 'index' )
+    console.log('LOGOUT ROUTE')
+    res.render( 'index', { user: undefined } )
 } )
 
 // register a new user
@@ -144,15 +144,12 @@ app.get( '/letsplay:name', ( req, res ) => {
 } )
 
 app.post( '/singlegame', (req, res) => {
-    console.log( user, 'bla', req.session.user)
-    game.findOne( {
-        where: {
-            name: 'Risk'
-        }, include: [
-            {model: user}
-        ]
+    console.log( req.session.user.id, ' is still logged in', req.body.gameId )
+    attend.findOrCreate( { where: {
+        userId: req.session.user.id,
+        gameId: req.body.gameId
+        }
     } )
-    .then(  )
 } )
 
 // find a game to join

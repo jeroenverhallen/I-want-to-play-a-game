@@ -13,8 +13,6 @@ user = db.conn.define( 'user', {
     password: sequelize.STRING,
     email: sequelize.STRING,
     age: sequelize.INTEGER,
-    hostrating: sequelize.FLOAT,
-    guestrating: sequelize.FLOAT,
     latitude: sequelize.FLOAT,
     longitude: sequelize.FLOAT
 } )
@@ -31,6 +29,10 @@ game = db.conn.define( 'game', {
     alcohol: sequelize.STRING
 } )
 
+attend = db.conn.define( 'attend', {
+    
+} )
+
 
 chat = db.conn.define( 'chat', {
     input: sequelize.STRING,
@@ -41,13 +43,13 @@ usergame = db.conn.define('user-game', {
     role: sequelize.STRING
 } )
 
-chat.belongsTo( game )
-game.hasMany( chat )
 game.belongsTo( user )
 user.hasMany( game )
-user.belongsToMany( game, {through: usergame} )
-game.belongsToMany( user, {through: usergame } )
 
+user.hasMany(attend)
+attend.belongsTo(user)
+attend.belongsTo(game)
+game.hasMany(attend)
 
 db.conn.sync( { force: true } )
 .then( f => {
