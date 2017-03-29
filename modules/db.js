@@ -59,39 +59,31 @@ db.conn.sync( { force: true } )
             password: 'poes',
             age: 27,
             latitude: 52.341,
-            longitude: 4.824,
-            hostrating: 3.5,
-            guestrating: 4.1     
+            longitude: 4.824
         } ),
         user.create( {
             username: 'Catan',
             password: 'Catan',
             age: 33,
             latitude: 52.349,
-            longitude: 4.884,
-            hostrating: 4.2,
-            guestrating: 3.1
+            longitude: 4.884
         } ),
         user.create( {
             username: 'Risk',
             password: 'Risk',
             age: 21,
             latitude: 52.243,
-            longitude: 4.921,
-            hostrating: 2.9,
-            guestrating: 2.7,  
+            longitude: 4.921
         } ),
         user.create( {
             username: 'Pierre',
             password: 'uh',
             age: 29,
             latitude: 48.9,
-            longitude: 2.4,
-            hostrating: 2.5,
-            guestrating: 3.9     
+            longitude: 2.4  
         } ) 
     ] )
-} ).then( f => {
+} ).then( f => { return Promise.all( [
     game.create( {
         name: 'schaken',
         userId: 1,
@@ -101,8 +93,7 @@ db.conn.sync( { force: true } )
         latitude: 52.341,
         longitude: 4.824,
         alcohol: 'Ik zat zelf te denken aan een goed glas whisky erbij'
-    } )
-} ).then( f => {
+    } ),
     game.create( {
         name: 'dammen',
         userId: 1,
@@ -112,8 +103,7 @@ db.conn.sync( { force: true } )
         latitude: 52.341,
         longitude: 4.824,
         alcohol: 'Ik zat zelf te denken aan een goed glas whisky erbij'
-    } )
-} ).then( f => {
+    } ),
     game.create( {
         name: 'Kolonisten van Catan',
         userId: 2,
@@ -123,8 +113,7 @@ db.conn.sync( { force: true } )
         latitude: 52.349,
         longitude: 4.884,
         alcohol: 'Het gaat om het spel maar neem gerust iets voor jezelf mee'
-    } )
-} ).then( f => {
+    } ),
     game.create( {
         name: 'Risk',
         userId: 3,
@@ -134,8 +123,7 @@ db.conn.sync( { force: true } )
         latitude: 52.243,
         longitude: 4.921,
         alcohol: 'BIERRRR!'
-    } )
-} ).then( f => {
+    } ),
     game.create( {
         name: 'jeu de boule',
         userId: 4,
@@ -146,7 +134,44 @@ db.conn.sync( { force: true } )
         longitude: 2.4,
         alcohol: 'du vin'
     } )
-} )
+] ) } ).then( f => { return Promise.all( [
+    attend.create( {
+        userId: 1,
+        gameId: 1
+    } ),
+   attend.create( {
+        userId: 1,
+        gameId: 2
+    } ),
+    attend.create( {
+        userId: 1,
+        gameId: 3
+    } ),
+    attend.create( {
+        userId: 1,
+        gameId: 4
+    } ),
+    attend.create( {
+        userId: 1,
+        gameId: 5
+    } ),
+    attend.create( {
+        userId: 2,
+        gameId: 3
+    } ),
+    attend.create( {
+        userId: 3,
+        gameId: 4
+    } ),
+    attend.create( {
+        userId: 4,
+        gameId: 5
+    } ),
+    attend.create( {
+        userId: 2,
+        gameId: 2
+    } )
+] ) } )
 .catch( err => {
   console.log('An error occured: ' + err)
 } )
