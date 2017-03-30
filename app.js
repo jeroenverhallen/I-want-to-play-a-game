@@ -2,7 +2,8 @@ const express = require('express'),
     bodyparser = require('body-parser'),
     session = require('express-session'),
  //   sequelize = require('sequelize')
-    Slider = require('bootstrap-slider')
+    Slider = require('bootstrap-slider'),
+    bcrypt = require('bcrypt-nodejs')
 
  //   GoogleMapsLoader = require('google-maps')
 const app = express()
@@ -49,15 +50,21 @@ app.post( '/login', ( req, res) => {
             username: req.body.username
         }
     } ).then( theuser => {
-        if( theuser.password == req.body.password ) {
-            req.session.user = theuser
-            res.render( 'index', {
-                user: theuser
-            } )
-        } else {
-            res.render( 'login', { user: req.session.user } )
-        }
-    } ).catch(console.log.bind(console))
+        bcrypt.compare( req.body.password, theuser.password, (err, result) => {
+            if(result) {
+                console.log('you log in good')
+                req.session.visited = true
+                req.session.user = theuser
+                res.render('index', {user: req.session.user})
+            } else {
+                console.log('no login for you')
+                res.render('login', {user: undefined})
+            }
+        } )
+    } ).catch(err => {
+        res.render('login', {user: undefined})
+        console.log('error fail')
+    } )
 } )
 
 // logout
@@ -73,11 +80,13 @@ app.post( '/newuser', (req, res) => {
         username: req.body.username,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
-        password: req.body.password,
         email: req.body.email,
         age: req.body.age
     }
-    user.create( newUser )
+    bcrypt.hash(req.body.password, null, null, (err,hash) => {
+        newUser.password = hash
+        user.create( newUser )
+    })
     res.render('login', { user: req.session.user })
 } )
 
@@ -200,7 +209,12 @@ app.post( '/chat', (req, res) => {
         userId: req.session.user.id,
         gameId: req.body.gameId,
         input: req.body.message
-    })
+    }).then( f => {
+        console.log( 'url?', req.params.name )
+        res.render('/', {
+            user: req.session.user
+        })
+    } )
 })
 
 // find a game to join

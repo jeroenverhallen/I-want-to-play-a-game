@@ -3,13 +3,18 @@ block content
     h1 Fill in this form and let the games begin
     form( action='newgame' method='post' )
         div
+            p What game do you want to play?
             input( type='text', name='name', placeholder='game name')
         div
-            input( class='text', type='integer', name='players', placeholder='how many players are needed?' )
+            p How many players can play this game?
+            input( class='text', type='integer', name='players' )
         div
-            input( type='text', name='date', placeholder='When will your game start?' )
+            p When will your game start?
+            input( type='text', name='date', placeholder='dd-mm-yyyy hh:mm' )
         div
-            input( type='text', name='alcohol', placeholder='Are people allowed or even encouraged to bring alcohol to the game?'  )
+            p Are people allowed or perhaps even encouraged to bring their own alcoholic drinks?
+            input( type='text', name='alcohol', placeholder= 'yes/no/maybe'  )
         div
-            input( type='text', name='info', placeholder='anything you want to add?')
+            p If there is anything you want to add, this is the field to write it in
+            input( type='text', name='info', placeholder='bring snacks')
         input( type="submit" )

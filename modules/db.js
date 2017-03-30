@@ -1,5 +1,6 @@
 const express = require('express')
     sequelize = require('sequelize')
+    bcrypt = require('bcrypt-nodejs')
 let db = {}
 
 db.conn = new sequelize( 'letsplay', process.env.POSTGRES_USER, 
@@ -55,33 +56,34 @@ attend.belongsTo(user)
 attend.belongsTo(game)
 game.hasMany(attend)
 
+let hash = bcrypt.hashSync('1')
 db.conn.sync( { force: true } )
 .then( f => {
     return Promise.all( [
         user.create( {
             username: 'Jeroen',
-            password: 'poes',
+            password: hash,
             age: 27,
             latitude: 52.341,
             longitude: 4.824
         } ),
         user.create( {
             username: 'Catan',
-            password: 'Catan',
+            password: hash,
             age: 33,
             latitude: 52.349,
             longitude: 4.884
         } ),
         user.create( {
             username: 'Risk',
-            password: 'Risk',
+            password: hash,
             age: 21,
             latitude: 52.243,
             longitude: 4.921
         } ),
         user.create( {
             username: 'Pierre',
-            password: 'uh',
+            password: hash,
             age: 29,
             latitude: 48.9,
             longitude: 2.4  
