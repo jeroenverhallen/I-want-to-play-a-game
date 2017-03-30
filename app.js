@@ -1,7 +1,7 @@
 const express = require('express'),
     bodyparser = require('body-parser'),
     session = require('express-session'),
-    sequelize = require('sequelize')
+ //   sequelize = require('sequelize')
     Slider = require('bootstrap-slider')
 
  //   GoogleMapsLoader = require('google-maps')
@@ -111,10 +111,40 @@ app.post( '/newgame', (req, res) => {
 //to see all games you personally started
 app.get( '/yourgames', ( req, res ) => {
     game.findAll( { 
-        where: { userId: req.session.user.id }
-    } ).then( games => {
+        where: { userId: req.session.user.id },
+        include: [
+            {
+                model: attend, 
+                include: [ user ]
+            },
+            {
+                model: user
+            }
+        ] } ).then( games => {
         res.render( 'yourgames', { games:games, user: req.session.user } )
     } )
+} )
+
+// all games you joined
+app.get( '/games', ( req, res ) => {
+    attend.findAll( {
+        where: {
+            userId: req.session.user.id },
+            include: [
+                { model: game,  
+                    include: [
+                        {
+                            model: attend,
+                            include: [ user ]
+                        },                        { 
+                            model: user 
+                        }
+                    ]
+                }
+            ]
+        } ).then( attends => {
+            res.render( 'games', { attends: attends } )
+        } )
 } )
 
 // see all games you can join
@@ -127,7 +157,10 @@ app.get( '/joingame', ( req, res ) => {
 
 app.post( '/joingame', (req, res) => {
     console.log(  req.body, req.body.sliderthing )
-    game.findAll( {    
+    game.findAll( { include: [
+            { model: attend, include: [ user ] },
+            { model: user }
+        ]   
     } ).then( games => {
         res.render( 'joingame', { games:games, user: req.session.user, sliderthing: req.body.sliderthing } )
     } )
@@ -139,7 +172,11 @@ app.get( '/letsplay:name', ( req, res ) => {
     game.findOne( {
         where: {
             name: req.params.name
-        }
+        }, include: [
+            { model: attend, include: [ user ] },
+            { model: user },
+            { model: message, include: [ user ]}
+        ]
     } )
     .then( game => {
         res.render( 'singlegame', { 
@@ -157,6 +194,14 @@ app.post( '/singlegame', (req, res) => {
         }
     } )
 } )
+
+app.post( '/chat', (req, res) => {
+    message.create({
+        userId: req.session.user.id,
+        gameId: req.body.gameId,
+        input: req.body.message
+    })
+})
 
 // find a game to join
 app.get( '/joingame', (req, res) => {

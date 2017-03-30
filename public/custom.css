@@ -6,8 +6,8 @@
 }
 #game {
 	border: .5px solid darkred;
-    padding: 2px;
-    margin: 2px;
+    padding: 0.5%;
+    margin: 0.5%x;
     display: inline-block;
 }
 #ex1Slider .slider-selection {

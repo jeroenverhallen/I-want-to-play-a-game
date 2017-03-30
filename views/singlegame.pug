@@ -3,13 +3,21 @@ block content
     h1 Join the game and have all the fun
     div#gameblock
         h#game= game.name
+        h3= 'game organized by ' + game.user.username
         p= 'date: ' + game.date
         p= 'players required: ' + game.players
-        p= 'current number of players: ' + game.joining                
+        p= 'current players: '
+            each attend in game.attends
+                li= attend.user.username  
         p= 'alcoholpolicy: ' + game.alcohol
         p= 'additional info: ' + game.info
         p= 'approximate distance from you: ' + Math.round( 110 * Math.sqrt( Math.pow( (game.latitude - user.latitude), 2) + Math.pow( (game.longitude - user.longitude), 2 ) ) ) + 'km'
-    
-    form( action='singlegame' method='post' )
-        input( name='gameId', value=game.id hidden )
-        input( type ='submit' value='JOIN THIS GAME')
+    div#gameblock
+        h3= 'CHAT'
+        each message in game.messages
+            p= message.user.username + ' : ' + message.input
+        form( action='chat' method='post' )
+            input( name='gameId', value=game.id hidden )
+            div
+                input( type='text', name='message')
+            input( type='submit' )

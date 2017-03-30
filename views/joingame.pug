@@ -12,11 +12,15 @@ block content
             if sliderthing
                 if distance < sliderthing
                     div#gameblock
-                            a#game( href='/letsplay' + game.name)
-                                h= game.name
+                            h= game.name
+                            h4= 'game organized by ' + game.user.username
                             p= 'date: ' + game.date
-                            p= 'players required: ' + game.players
-                            p= 'current number of players: ' + game.joining
+                            p= 'current players: '
+                                each attend in game.attends
+                                    li= attend.user.username
                             p= 'alcoholpolicy: ' + game.alcohol
                             p= 'additional info: ' + game.info
                             p= 'approximate distance from you: ' + distance + 'km'
+                            form( action='singlegame' method='post' )
+                                input( name='gameId', value=game.id hidden )
+                                input( type ='submit' value='JOIN THIS GAME')

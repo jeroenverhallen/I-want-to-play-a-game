@@ -34,9 +34,8 @@ attend = db.conn.define( 'attend', {
 } )
 
 
-chat = db.conn.define( 'chat', {
-    input: sequelize.STRING,
-    messages: sequelize.STRING
+message = db.conn.define( 'message', {
+    input: sequelize.STRING
 } )
 
 usergame = db.conn.define('user-game', {
@@ -45,6 +44,11 @@ usergame = db.conn.define('user-game', {
 
 game.belongsTo( user )
 user.hasMany( game )
+
+game.hasMany( message )
+message.belongsTo( game )
+user.hasMany( message )
+message.belongsTo( user )
 
 user.hasMany(attend)
 attend.belongsTo(user)
@@ -170,6 +174,52 @@ db.conn.sync( { force: true } )
     attend.create( {
         userId: 2,
         gameId: 2
+    } )
+] ) } ).then( f => { return Promise.all( [
+    message.create( {
+        userId: 1,
+        gameId: 1,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 2,
+        gameId: 1,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 1,
+        gameId: 2,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 2,
+        gameId: 3,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 3,
+        gameId: 4,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 4,
+        gameId: 5,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 1,
+        gameId: 5,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 1,
+        gameId: 4,
+        input: 'hoi'
+    } ),
+    message.create( {
+        userId: 2,
+        gameId: 2,
+        input: 'hoi'
     } )
 ] ) } )
 .catch( err => {

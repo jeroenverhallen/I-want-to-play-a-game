@@ -7,6 +7,9 @@ block content
                     h#game= game.name
                     p= 'date: ' + game.date
                     p= 'players required: ' + game.players
-                    p= 'current number of players: ' + game.joining
+                    p= 'current players: '
+                    p= game.attends
+                        each attend in game.attends
+                            li= attend.user.username 
                     p= 'alcoholpolicy: ' + game.alcohol
                     p= 'additional info: ' + game.info

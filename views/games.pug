@@ -1,0 +1,13 @@
+extends ./index
+block content
+    h1 Here is a list of all games you joined
+    .container
+        each attend in attends
+            div#gameblock
+                a#game(href='/letsplay' + attend.game.name)
+                    h= attend.game.name
+                h4= 'game organized by ' + attend.game.user.username
+                p= 'date: ' + attend.game.date
+                p= 'total players required: ' + attend.game.players
+                p= 'alcoholpolicy: ' + attend.game.alcohol
+                p= 'additional info: ' + attend.game.info
