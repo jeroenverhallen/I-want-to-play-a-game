@@ -13,11 +13,6 @@ function geoFindMe() {
     var longitude = Math.round(100 * position.coords.longitude)/100
 
     output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>'
-
-    var img = new Image()
-    img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false"
-
-    output.appendChild(img)
   }
 
   function error() {
