@@ -1,11 +1,9 @@
 const express = require('express'),
     bodyparser = require('body-parser'),
     session = require('express-session'),
- //   sequelize = require('sequelize')
     Slider = require('bootstrap-slider'),
     bcrypt = require('bcrypt-nodejs')
 
- //   GoogleMapsLoader = require('google-maps')
 const app = express()
 const db = require(__dirname + '/modules/db')
 
@@ -25,7 +23,7 @@ app.use( session( {
 } ) )
 
 
-// landing page
+// Landing page
 app.get( '/', (req, res) => {
     res.render( 'index', { user: req.session.user } )
 } )
@@ -34,7 +32,6 @@ app.get( '/index', (req, res) => {
     res.render( 'index', { user: req.session.user } )
  } )
 
-// login
 app.get( '/login', (req, res) => {
     res.render( 'login', { user: req.session.user
     } )
@@ -44,6 +41,7 @@ app.get( '/newuser', (req, res) => {
     res.render( 'newuser', { user: req.session.user } )
 } )
 
+// Login
 app.post( '/login', ( req, res) => {
     user.findOne( {
         where: {
@@ -67,14 +65,14 @@ app.post( '/login', ( req, res) => {
     } )
 } )
 
-// logout
+// Logout
 app.get( '/logout', (req, res) => {
     req.session.destroy( )
     console.log('LOGOUT ROUTE')
     res.render( 'index', { user: undefined } )
 } )
 
-// register a new user
+// Register a new user
 app.post( '/newuser', (req, res) => {
     let newUser = {
         username: req.body.username,
@@ -90,7 +88,7 @@ app.post( '/newuser', (req, res) => {
     res.render('login', { user: req.session.user })
 } )
 
-// start a new game
+// Start a new game and join it immediately
 app.get( '/newgame', (req, res) => {
     res.render( 'newgame', { user: req.session.user } )
 } )
@@ -117,7 +115,7 @@ app.post( '/newgame', (req, res) => {
     res.render( 'index', { user: req.session.user } )
 } )
 
-//to see all games you personally started
+// Show all games you initiated
 app.get( '/yourgames', ( req, res ) => {
     game.findAll( { 
         where: { userId: req.session.user.id },
@@ -134,7 +132,7 @@ app.get( '/yourgames', ( req, res ) => {
     } )
 } )
 
-// all games you joined
+// Show all games you joined
 app.get( '/games', ( req, res ) => {
     attend.findAll( {
         where: {
@@ -156,7 +154,11 @@ app.get( '/games', ( req, res ) => {
         } )
 } )
 
-// see all games you can join
+// Show all games you can join
+app.get( '/joingame', (req, res) => {
+    res.render( 'joingame', { user: req.session.user } )
+} )
+
 app.get( '/joingame', ( req, res ) => {
     game.findAll( {    
     } ).then( games => {
@@ -165,17 +167,17 @@ app.get( '/joingame', ( req, res ) => {
 } )
 
 app.post( '/joingame', (req, res) => {
-    console.log(  req.body, req.body.sliderthing )
     game.findAll( { include: [
             { model: attend, include: [ user ] },
             { model: user }
         ]   
     } ).then( games => {
+        // The sliderthing gives you the current value of the slider, which is the maximum distance that you want to show
         res.render( 'joingame', { games:games, user: req.session.user, sliderthing: req.body.sliderthing } )
     } )
 } )
 
-// view a game to join it
+// View a single game with chat
 app.get( '/letsplay:name', ( req, res ) => {
     console.log('let us see if this is even firin')
     game.findOne( {
@@ -204,23 +206,14 @@ app.post( '/singlegame', (req, res) => {
     } )
 } )
 
+// Post something in the chat
 app.post( '/chat', (req, res) => {
     message.create({
         userId: req.session.user.id,
         gameId: req.body.gameId,
         input: req.body.message
-    }).then( f => {
-        console.log( 'url?', req.params.name )
-        res.render('/', {
-            user: req.session.user
-        })
-    } )
+    })
 })
-
-// find a game to join
-app.get( '/joingame', (req, res) => {
-    res.render( 'joingame', { user: req.session.user } )
-} )
 
 app.listen( 3000, f => {
     console.log( 'go to localhost:3000' )

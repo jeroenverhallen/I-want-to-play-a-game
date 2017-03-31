@@ -30,9 +30,7 @@ game = db.conn.define( 'game', {
     alcohol: sequelize.STRING
 } )
 
-attend = db.conn.define( 'attend', {
-    
-} )
+attend = db.conn.define( 'attend', {  } )
 
 
 message = db.conn.define( 'message', {
@@ -42,20 +40,23 @@ message = db.conn.define( 'message', {
 usergame = db.conn.define('user-game', {
     role: sequelize.STRING
 } )
-
+// A user can start multiple games
 game.belongsTo( user )
 user.hasMany( game )
 
+// Games have a chatsystem where each message is connected to the user who wrote it
 game.hasMany( message )
 message.belongsTo( game )
 user.hasMany( message )
 message.belongsTo( user )
 
+// Attends link users to games to show their attendance
 user.hasMany(attend)
 attend.belongsTo(user)
 attend.belongsTo(game)
 game.hasMany(attend)
 
+// I fill the database with dummy values for illustrative purposes
 let hash = bcrypt.hashSync('1')
 db.conn.sync( { force: true } )
 .then( f => {
